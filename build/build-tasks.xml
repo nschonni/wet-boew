@@ -17,9 +17,7 @@
 		<classpath refid="antcontrib.classpath" />
 	</taskdef>
 	
-	<target name="-init" depends="-build-jruby">
-		<mkdir dir="${build.dir}"/>
-	</target>
+	<extension-point name="-init"/>
 	
 	<!-- yui-compressor task definition  -->
 	<path id="yui.classpath">
@@ -46,7 +44,7 @@
 	</taskdef>
 	
 	<!-- Include jruby + gems (compass + sass) -->
-	<target name="-build-jruby" depends="-jruby.jar.check" unless="jruby.jar.exists">
+	<target name="-build-jruby" extensionOf="-init" depends="-jruby.jar.check" unless="jruby.jar.exists">
 		<mkdir dir="${lib.dir}/jruby-compiled" />
 		<parallel>
 			<get src="http://jruby.org.s3.amazonaws.com/downloads/${jruby.version}/${jruby.jar}" dest="${lib.dir}/${jruby.jar}" skipexisting="true"/>
@@ -121,5 +119,116 @@
 	<target name="clean">
 		<delete dir="${build.dir}" />
 		<delete dir="${dist.dir}" />
+	</target>
+	
+	<extension-point name="build" depends="prepare-files, encode-images, compress" description="Core build task. Subprojects should subscrib to the 'prepare-files' and 'compress'" />
+	
+	<extension-point name="prepare-files" depends="-init" />
+	
+	<extension-point name="encode-images" depends="prepare-files" />
+	
+	<extension-point name="compress" depends="encode-images" />
+	
+	<extension-point name="test" />
+	
+	<target name="-base64-encode">
+		<property name="image.dir" location="${build.dir}/images"/>
+
+		<cssurlembed skipMissing="true" root="${image.dir}">
+			<fileset dir="${build.dir}/css">
+				<include name="*.css"/>
+				<exclude name="*ie.css"/>
+			</fileset>
+		</cssurlembed>
+	</target>
+	
+	<target name="-base64-encode-jquery">
+		<property name="jquerymobile.dir" location="${src.dir}/jquerymobile"/>
+		<cssurlembed skipMissing="false" root="${jquerymobile.dir}">
+			<fileset dir="${build.dir}/css">
+				<include name="jquery.mobile.css"/>
+			</fileset>
+		</cssurlembed>
+	</target>
+	
+	<target name="-minify">
+		<yui-compressor warn="false" munge="true" preserveAllSemiColons="false" fromDir="${build.dir}" toDir="${build.dir}" charset="utf-8">
+			<include name="**/*.css" />
+			<include name="**/*.js" />
+			<exclude name="**/*-min.css" />
+			<exclude name="**/settings.js" />
+			<exclude name="**/*-min.js" />
+			<exclude name="**/*.min.js" />
+		</yui-compressor>
+		<delete>
+			<fileset dir="${build.dir}">
+				<include name="**/*.css" />
+				<include name="**/*.js" />
+				<exclude name="**/settings.js" />
+				<exclude name="**/*-min.css" />
+				<exclude name="**/*-min.js" />
+				<exclude name="**/*.min.js" />
+			</fileset>
+		</delete>
+	</target>
+	
+	<target name="-copy-css" depends="compile.sass">
+		<loadfile srcfile="${build.dir}/../build-css-head.txt" property="build.css.head"/>
+		<copy todir="${build.dir}/css">
+			<fileset dir="${src.dir}/css">
+				<include name="*.css"/>
+			</fileset>
+			<filterchain>
+				<concatfilter prepend="${build.dir}/../build-css-head.txt"/>
+				<replacetokens>
+					<token key="wet-boew-build.version" value="${wet-boew-build.version}"/>
+					<token key="wet-boew-build.starttime" value="${wet-boew-build.starttime}"/>
+				</replacetokens>
+			</filterchain>
+		</copy>
+	</target>
+	
+	<target name="-copy-jquery-css">
+		<loadfile srcfile="${build.dir}/../build-css-head.txt" property="build.css.head"/>
+		<loadfile srcfile="${src.dir}/../js/jquerymobile/jquery.mobile.structure.min.css" property="jquery.mobile.license">
+			<filterchain>
+				<headfilter lines="1"/>
+			</filterchain>
+		</loadfile>
+		<concat dest="${build.dir}/css/jquery.mobile.css">
+			<header>${build.css.head}
+			${jquery.mobile.license}</header>
+			<fileset dir="${src.dir}/../js/jquerymobile">
+				<include name="*structure.css"/>
+			</fileset>
+			<fileset dir="${src.dir}/jquerymobile">
+				<include name="*theme.css"/>
+			</fileset>
+			<filterchain>
+				<replacetokens>
+					<token key="wet-boew-build.version" value="${wet-boew-build.version}"/>
+					<token key="wet-boew-build.starttime" value="${wet-boew-build.starttime}"/>
+				</replacetokens>
+			</filterchain>
+		</concat>
+	</target>
+	
+	<target name="-copy-js">
+		<copy todir="${build.dir}/js">
+			<fileset dir="${src.dir}/js"/>
+			<filterchain>
+				<concatfilter prepend="${build.dir}/../build-js-head.txt"/>
+				<replacetokens>
+					<token key="wet-boew-build.version" value="${wet-boew-build.version}"/>
+					<token key="wet-boew-build.starttime" value="${wet-boew-build.starttime}"/>
+				</replacetokens>
+			</filterchain>
+		</copy>
+	</target>
+	
+	<target name="-copy-images">
+		<copy todir="${build.dir}/images">
+			<fileset dir="${src.dir}/images" />
+		</copy>
 	</target>
 </project>
