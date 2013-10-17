@@ -70,9 +70,8 @@ module.exports = (grunt) ->
 	#Internal task groups
 	@registerTask(
 		"js",
-		"INTERNAL: Compiles CoffeeScript and copies all third party JS to the dist folder",
+		"INTERNAL: Copies all third party JS to the dist folder",
 		[
-			"coffee",
 			"copy:jquery",
 			"copy:polyfills",
 			"copy:deps",
@@ -325,13 +324,6 @@ module.exports = (grunt) ->
 				dest: 'dist/css'
 				ext: "<%= environment.suffix %>.css"
 
-		coffee:
-			plugins:
-				options:
-					bare: true
-				files:
-					"dist/js/wet-boew.js": ["src/core/helpers.coffee", "src/plugins/**/*.coffee"]
-
 		modernizr:
 			devFile: "lib/modernizr/modernizr-custom.js"
 			outputFile: "lib/modernizr/modernizr-custom.js"
@@ -397,7 +389,6 @@ module.exports = (grunt) ->
 				src: [
 					"**/*.*",
 					"!**/*.js",
-					"!**/*.coffee",
 					"!**/*.scss",
 					"!**/*.hbs",
 					"!**/assets/*"
@@ -521,7 +512,6 @@ module.exports = (grunt) ->
 	@loadNpmTasks "assemble"
 	@loadNpmTasks "grunt-autoprefixer"
 	@loadNpmTasks "grunt-contrib-clean"
-	@loadNpmTasks "grunt-contrib-coffee"
 	@loadNpmTasks "grunt-contrib-concat"
 	@loadNpmTasks "grunt-contrib-connect"
 	@loadNpmTasks "grunt-contrib-copy"
