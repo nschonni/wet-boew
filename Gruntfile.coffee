@@ -61,6 +61,16 @@ module.exports = (grunt) ->
 		"Full build for running tests locally with Grunt Mocha"
 		[
 			"pre-mocha"
+			"jscoverage"
+			"mocha"
+		]
+	)
+
+	@registerTask(
+		"test-coverage"
+		"Full build for running tests locally with Grunt Mocha"
+		[
+			"pre-mocha"
 			"mocha"
 		]
 	)
@@ -878,9 +888,9 @@ module.exports = (grunt) ->
 							dir = url.substring( 0, url.lastIndexOf( "/" ) + 1 )
 
 							# Test to see if the plugin or polyfill has a test file
-							plugins = dir.replace("/dist/demos/", "src/plugins/") + "test.js"
+							plugins = dir.replace("/dist-cov/unmin/demos/", "src/plugins/") + "test.js"
 
-							polyfills = dir.replace("/dist/demos/", "src/polyfills/") + "test.js"
+							polyfills = dir.replace("/dist-cov/unmin/demos/", "src/polyfills/") + "test.js"
 
 							testFile = if fs.existsSync( plugins ) then plugins else if fs.existsSync( polyfills ) then polyfills else ""
 
@@ -933,32 +943,53 @@ module.exports = (grunt) ->
 			all:
 				options:
 					reporter: "Spec"
+					timeout: 10000
+					logErrors: true
 					urls: grunt.file.expand(
 						filter: ( src ) ->
-							src = path.dirname( src ).replace( /\\/g , "/" ) #" This is to escape a Sublime text regex issue in the replace
+							src = path.dirname( src ).replace( /\\/g, "\/" )
 							return fs.existsSync( src + "/test.js" )
-						"src/plugins/**/*.hbs"
-						"src/polyfills/**/*.hbs"
+						"src/plugins/**/*-en.hbs"
+						"src/polyfills/**/*-en.hbs"
 					).map( ( src ) ->
-						src = src.replace( /\\/g , "/" ) #" This is to escape a Sublime text regex issue in the replace
-						src = src.replace( "src/", "dist/")
-						src = src.replace( "plugins/", "demos/" )
-						src = src.replace( "polyfills/", "demos/" )
+						src = src.replace( /\\/g, "\/" )
+						src = src.replace( "src/", "dist-cov/")
+						src = src.replace( "plugins/", "unmin/demos/" )
+						src = src.replace( "polyfills/", "unmin/demos/" )
 						src = src.replace( ".hbs", ".html" )
 						return "http://localhost:8000/" + src
 					)
+			coverage:
+				options:
+					reporter: require.resolve( "mocha-lcov-reporter" ).replace( "index.js", "lib\\lcov.js" )
+					timeout: 10000
+					urls: grunt.file.expand(
+						filter: ( src ) ->
+							src = path.dirname( src ).replace( /\\/g, "\/" )
+							return fs.existsSync( src + "/test." )
+						"src/plugins/**/*-en.hbs"
+						"src/polyfills/**/*-en.hbs"
+					).map( ( src ) ->
+						src = src.replace( /\\/g, "\/" )
+						src = src.replace( "src/", "dist-cov/")
+						src = src.replace( "plugins/", "unmin/demos/" )
+						src = src.replace( "polyfills/", "unmin/demos/" )
+						src = src.replace( ".hbs", ".html" )
+						return "http://localhost:8000/" + src
+					)
+				dest: "dist-cov/coverage.out"
 
 		"saucelabs-mocha":
 			all:
 				options:
 					urls: grunt.file.expand(
 						filter: ( src ) ->
-							src = path.dirname( src ).replace( /\\/g , "/" ) #" This is to escape a Sublime text regex issue in the replace
+							src = path.dirname( src ).replace( /\\/g, "\/" )
 							return fs.existsSync( src + "/test.js" )
 						"src/plugins/**/*.hbs"
 						"src/polyfills/**/*.hbs"
 					).map( ( src ) ->
-						src = src.replace( /\\/g , "/" ) #" This is to escape a Sublime text regex issue in the replace
+						src = src.replace( /\\/g, "\/" )
 						src = src.replace( "src/", "dist/")
 						src = src.replace( "plugins/", "demos/" )
 						src = src.replace( "polyfills/", "demos/" )
@@ -974,6 +1005,13 @@ module.exports = (grunt) ->
 						process.env.TRAVIS_BRANCH,
 						process.env.TRAVIS_COMMIT
 					]
+
+		jscoverage:
+			options:
+				encoding: "utf8"
+			all:
+				src: "dist"
+				dest: "dist-cov"
 
 		"gh-pages":
 			options:
