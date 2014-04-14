@@ -56,6 +56,7 @@
     "grunt-saucelabs": "~4.1.2",
     "grunt-wget": "~0.1.0",
     "mocha": "~1.13.0",
+    "sassdown": "^0.2.6",
     "sinon": "~1.7.3"
   }
 }

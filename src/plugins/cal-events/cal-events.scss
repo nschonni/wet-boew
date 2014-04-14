@@ -1,7 +1,9 @@
+// Web Experience Toolkit (WET) / Boîte à outils de l'expérience Web (BOEW)
+// wet-boew.github.io/wet-boew/License-en.html / wet-boew.github.io/wet-boew/Licence-fr.html
+
 /*
- * Web Experience Toolkit (WET) / Boîte à outils de l'expérience Web (BOEW)
- * wet-boew.github.io/wet-boew/License-en.html / wet-boew.github.io/wet-boew/Licence-fr.html
- */
+# Calendar Events
+*/
 .ev-details {
 	color: #000;
 	background-color: $clrWhite;
@@ -13,7 +15,7 @@
 	margin: 0;
 	margin-top: -0.5em;
 	list-style-type: none;
-	
+
 	a {
 		&:hover,
 		&:focus {

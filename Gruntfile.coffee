@@ -595,6 +595,24 @@ module.exports = (grunt) ->
 					ext: ".css"
 				]
 
+		sassdown:
+			options:
+				excludeMissing: false
+				assets: []
+				readme: "README.md"
+
+			all:
+				expand: true
+				cwd: "src/"
+				src: [
+					"**/*.scss"
+					# "!**/_*.scss"
+					"!**/demo/*.scss"
+					"!**/_sprites.scss"
+				]
+				dest: "dist/unmin/sassdown/"
+
+
 		autoprefixer:
 			options:
 				browsers: [
@@ -1288,6 +1306,7 @@ module.exports = (grunt) ->
 	@loadNpmTasks "grunt-sass"
 	@loadNpmTasks "grunt-saucelabs"
 	@loadNpmTasks "grunt-wget"
+	@loadNpmTasks "sassdown"
 
 	# Load custom grunt tasks form the tasks directory
 	@loadTasks "tasks"
