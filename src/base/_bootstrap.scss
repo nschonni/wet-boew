@@ -3,5 +3,5 @@
 $icon-font-path: "#{$wb-core-path}/fonts/";
 
 
-@import "../../lib/bootstrap-sass-official/assets/stylesheets/bootstrap";
+@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 @import "bootstrap-overrides/base";

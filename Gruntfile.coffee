@@ -969,7 +969,7 @@ module.exports = (grunt) ->
 
 		copy:
 			bootstrap:
-				cwd: "lib/bootstrap-sass-official/assets/fonts/bootstrap"
+				cwd: "node_modules/bootstrap-sass/assets/fonts/bootstrap"
 				src: "*.*"
 				dest: "<%= coreDist %>/fonts"
 				expand: true
@@ -1123,13 +1123,13 @@ module.exports = (grunt) ->
 						dest: "dist"
 						expand: true
 					}
-					
+
 					{
 						src: "*.txt"
 						dest: "<%= coreDist %>"
 						expand: true
 					}
-					
+
 					{
 						src: "*.txt"
 						dest: "<%= themeDist %>"
@@ -1348,7 +1348,7 @@ module.exports = (grunt) ->
 				src: [
 					"**/*.*"
 				]
-				
+
 			travis_theme_cdn:
 				options:
 					repo: process.env.THEME_CDN_REPO
