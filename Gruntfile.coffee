@@ -1010,6 +1010,7 @@ module.exports = (grunt) ->
 					cwd: "node_modules"
 					src: [
 						"datatables/media/js/jquery.dataTables.js"
+						"magnific-popup/dist/jquery.magnific-popup.js"
 					]
 					dest: "<%= coreDist %>/js/deps"
 					expand: true
@@ -1024,7 +1025,6 @@ module.exports = (grunt) ->
 						"SideBySideImproved/jquery.flot.orderBars.js"
 						"jquery-validation/dist/jquery.validate.js"
 						"jquery-validation/dist/additional-methods.js"
-						"magnific-popup/dist/jquery.magnific-popup.js"
 						"google-code-prettify/src/*.js"
 						"proj4/dist/proj4.js"
 						"openlayers/OpenLayers.debug.js"
