@@ -1007,6 +1007,14 @@ module.exports = (grunt) ->
 					expand: true
 					flatten: true
 				,
+					cwd: "node_modules"
+					src: [
+						"datatables/media/js/jquery.dataTables.js"
+					]
+					dest: "<%= coreDist %>/js/deps"
+					expand: true
+					flatten: true
+				,
 					cwd: "lib"
 					src: [
 						"jquery-pjax/jquery.pjax.js"
@@ -1018,7 +1026,6 @@ module.exports = (grunt) ->
 						"jquery-validation/dist/additional-methods.js"
 						"magnific-popup/dist/jquery.magnific-popup.js"
 						"google-code-prettify/src/*.js"
-						"DataTables/media/js/jquery.dataTables.js"
 						"proj4/dist/proj4.js"
 						"openlayers/OpenLayers.debug.js"
 					]
