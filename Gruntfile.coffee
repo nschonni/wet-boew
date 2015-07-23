@@ -683,6 +683,13 @@ module.exports = (grunt) ->
 				dest: "dist/"
 				expand: true
 
+		scsslint:
+			options:
+	      bundleExec: true
+	      config: '.scss-lint.yml'
+			all:
+				src: "src/**/*.scss"
+
 		csslint:
 			options:
 				csslintrc: ".csslintrc"
@@ -1414,6 +1421,7 @@ module.exports = (grunt) ->
 	@loadNpmTasks "grunt-modernizr"
 	@loadNpmTasks "grunt-sass"
 	@loadNpmTasks "grunt-saucelabs"
+	@loadNpmTasks "grunt-scss-lint"
 	@loadNpmTasks "grunt-wget"
 	@loadNpmTasks "grunt-wet-boew-postbuild"
 

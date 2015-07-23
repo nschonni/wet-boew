@@ -6,7 +6,7 @@
   "scripts": {
     "test": "grunt test",
     "postinstall": "bower update && grunt init",
-    "travis_script": "scss-lint . && grunt dist test-mocha saucelabs && bundle exec rake",
+    "travis_script": "grunt scsslint dist test-mocha saucelabs && bundle exec rake",
     "travis_after_success": "grunt deploy"
   },
   "repository": {
@@ -59,6 +59,7 @@
     "grunt-modernizr": "~0.5.2",
     "grunt-sass": "^1.0.0",
     "grunt-saucelabs": "^8.5.0",
+    "grunt-scss-lint": "^0.3.8",
     "grunt-wet-boew-postbuild": "wet-boew/grunt-wet-boew-postbuild#v0.1.2",
     "grunt-wget": "~0.1.0",
     "mocha": "^1.21.5",
