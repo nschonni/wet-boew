@@ -65,5 +65,8 @@
     "mocha": "^1.21.5",
     "sinon": "~1.12.2",
     "time-grunt": "~1.0.0"
+  },
+  "dependencies": {
+    "bootstrap-sass": "3.3.1"
   }
 }
