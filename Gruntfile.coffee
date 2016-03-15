@@ -229,8 +229,7 @@ module.exports = (grunt) ->
 		"test"
 		"INTERNAL: Runs testing tasks except for SauceLabs testing"
 		[
-			"jshint"
-			"jscs"
+			"eslint"
 		]
 	)
 
@@ -1180,7 +1179,7 @@ module.exports = (grunt) ->
 			options:
 				livereload: true
 			js:
-				files: "<%= jshint.all.src %>"
+				files: "<%= eslint.all.src %>"
 				tasks: "js"
 			css:
 				files: [
@@ -1198,26 +1197,13 @@ module.exports = (grunt) ->
 				files: "site/pages/docs/**/*.hbs"
 				tasks: "pages:docs"
 
-		jshint:
-			options:
-				jshintrc: ".jshintrc"
-
+		eslint:
+			configFile: '.eslintrc'
 			all:
 				src: [
 					"src/**/*.js"
 					"theme/**/*.js"
 					"tasks/*.js"
-				]
-
-		jscs:
-			all:
-				options:
-					config: ".jscsrc"
-
-				src: [
-					"<%= jshint.all.src %>"
-					"!src/polyfills/slider/slider.js",
-					"!src/polyfills/events/mobile.js"
 				]
 
 		connect:
