@@ -72,6 +72,7 @@
     "grunt-imagine": "^0.3.6",
     "grunt-mocha": "~0.4.12",
     "grunt-postcss": "^0.9.0",
+    "grunt-retire": "^1.0.7",
     "grunt-sass": "^2.1.0",
     "grunt-sass-lint": "^0.2.0",
     "grunt-saucelabs": "^9.0.0",

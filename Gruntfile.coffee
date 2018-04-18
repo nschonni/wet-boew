@@ -1456,6 +1456,19 @@ module.exports = (grunt) ->
 					"{js,css}/*.{js,css}"
 				]
 				expand: true
+		retire:
+			options:
+				ignorefile: ".retireignore.json"
+			js: [
+				"src/**/*.js"
+			]
+			node: [
+				"node_modules/"
+			]
+			bower: [
+				"lib/**/*.js"
+			]
+
 
 	require( "load-grunt-tasks" )( grunt, requireResolution: true )
 

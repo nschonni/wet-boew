@@ -1,0 +1,14 @@
+[
+	{
+		"path": "node_modules/request",
+		"justification" : "Used only for development setup"
+	},
+	{
+		"path": "node_modules/hoek",
+		"justification": "Sub-dependency of request, which is being ignored"
+	},
+	{
+		"path": "node_modules/lodash",
+		"justification": "Build dependency only"
+	}
+]
