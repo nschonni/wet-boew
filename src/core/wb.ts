@@ -15,8 +15,8 @@
  * @param {String} url of URL to examine
  * @return {Object} of the parts of passed URL
  */
-var getUrlParts = function( url ) {
-		var a = document.createElement( "a" );
+let getUrlParts = function( url ) {
+		const a = document.createElement( "a" );
 		a.href = url;
 		return {
 			href: a.href,
@@ -31,7 +31,7 @@ var getUrlParts = function( url ) {
 
 			// A collection of the parameters of the query string part of the URL.
 			params: ( function() {
-				var results = {},
+				let results = {},
 					queryString = encodeURI( decodeURI( a.search.replace( /^\?/, "" ) ) ).replace( /'/g, "%27" ).split( "&" ),
 					len = queryString.length,
 					key, strings, i;
@@ -43,7 +43,7 @@ var getUrlParts = function( url ) {
 					}
 				}
 				return results;
-			}() )
+			}() ),
 		};
 	},
 
@@ -67,7 +67,7 @@ var getUrlParts = function( url ) {
 	lang = document.documentElement.lang,
 
 	paths = ( function( ele ) {
-		var paths = {};
+		const paths = {};
 
 		paths.home = ele.prop( "src" )
 				.split( "?" )[ 0 ].split( "/" )
@@ -88,7 +88,7 @@ var getUrlParts = function( url ) {
 				dep: ele.attr( "data-dep" ),
 				js: ele.attr( "data-js" ),
 				css: ele.attr( "data-css" ),
-				mode: ele.attr( "data-mode" )
+				mode: ele.attr( "data-mode" ),
 			} );
 		}
 
@@ -100,7 +100,7 @@ var getUrlParts = function( url ) {
 	 * @return {integer} of IE version
 	 */
 	oldie = ( function() {
-		var undef,
+		let undef,
 			v = 3,
 			div = document.createElement( "div" ),
 			all = div.getElementsByTagName( "i" );
@@ -108,7 +108,7 @@ var getUrlParts = function( url ) {
 		while ( (
 			div.innerHTML = "<!--[if gt IE " + ( v += 1 ) + "]><i></i><![endif]-->",
 			all[ 0 ]
-		) ) {};
+		) ) {}
 
 		return v > 4 ? v : undef;
 	}() ),
@@ -124,7 +124,7 @@ var getUrlParts = function( url ) {
 	 * @return {boolean} of state of disabled flag
 	 */
 	disabled = ( function() {
-		var disabledSaved = "false",
+		let disabledSaved = "false",
 			disabled;
 
 		try {
@@ -144,33 +144,33 @@ var getUrlParts = function( url ) {
 		"/assets": paths.asset,
 		"/templates": paths.template,
 		"/deps": paths.dep,
-		lang: lang,
-		mode: paths.mode,
-		doc: $( document ),
-		win: $( window ),
-		html: $( "html" ),
-		pageUrlParts: currentpage,
-		getUrlParts: getUrlParts,
-		isDisabled: disabled,
-		isStarted: false,
-		isReady: false,
-		ignoreHashChange: false,
-		initQueue: 0,
+		"lang": lang,
+		"mode": paths.mode,
+		"doc": $( document ),
+		"win": $( window ),
+		"html": $( "html" ),
+		"pageUrlParts": currentpage,
+		"getUrlParts": getUrlParts,
+		"isDisabled": disabled,
+		"isStarted": false,
+		"isReady": false,
+		"ignoreHashChange": false,
+		"initQueue": 0,
 
-		getPath: function( property ) {
+		"getPath"( property ) {
 			return this.hasOwnProperty( property ) ? this[ property ] : undef;
 		},
 
-		getMode: function() {
+		"getMode"() {
 			return this.mode;
 		},
 
-		getId: function() {
+		"getId"() {
 			return "wb-auto-" + ( seed += 1 );
 		},
 
-		init: function( event, componentName, selector, noAutoId ) {
-			var	eventTarget = event.target,
+		"init"( event, componentName, selector, noAutoId ) {
+			const	eventTarget = event.target,
 				isEvent = !!eventTarget,
 				node = isEvent ? eventTarget : event,
 				initedClass = componentName + "-inited",
@@ -197,7 +197,7 @@ var getUrlParts = function( url ) {
 			return undef;
 		},
 
-		ready: function( $elm, componentName, context ) {
+		"ready"( $elm, componentName, context ) {
 			if ( $elm ) {
 
 				// Trigger any nested elements (excluding nested within nested)
@@ -222,25 +222,25 @@ var getUrlParts = function( url ) {
 		},
 
 		// Lets load some variables into wb for IE detection
-		other: !oldie,
-		desktop: ( window.orientation === undefined ),
-		ie: !!oldie,
-		ie6: ( oldie === 6 ),
-		ie7: ( oldie === 7 ),
-		ie8: ( oldie === 8 ),
-		ie9: ( oldie === 9 ),
-		ielt7: ( oldie < 7 ),
-		ielt8: ( oldie < 8 ),
-		ielt9: ( oldie < 9 ),
-		ielt10: ( oldie < 10 ),
-		ie11: ( !!navigator.userAgent.match( /Trident\/7\./ ) ),
+		"other": !oldie,
+		"desktop": ( window.orientation === undefined ),
+		"ie": !!oldie,
+		"ie6": ( oldie === 6 ),
+		"ie7": ( oldie === 7 ),
+		"ie8": ( oldie === 8 ),
+		"ie9": ( oldie === 9 ),
+		"ielt7": ( oldie < 7 ),
+		"ielt8": ( oldie < 8 ),
+		"ielt9": ( oldie < 9 ),
+		"ielt10": ( oldie < 10 ),
+		"ie11": ( !!navigator.userAgent.match( /Trident\/7\./ ) ),
 
-		selectors: [],
+		"selectors": [],
 
-		resizeEvents: "xxsmallview.wb xsmallview.wb smallview.wb mediumview.wb largeview.wb xlargeview.wb",
+		"resizeEvents": "xxsmallview.wb xsmallview.wb smallview.wb mediumview.wb largeview.wb xlargeview.wb",
 
 		// For Charts and Geomap
-		drawColours: [
+		"drawColours": [
 			"#8d201c",
 			"#EE8310",
 			"#2a7da6",
@@ -253,12 +253,12 @@ var getUrlParts = function( url ) {
 			"#418541",
 			"#87aec9",
 			"#23447e",
-			"#999999"
+			"#999999",
 		],
 
 		// Get and generate a unique session id
-		sessionGUID: function() {
-			var sessionId = sessionStorage.getItem( "wb-session-GUID" );
+		"sessionGUID"() {
+			let sessionId = sessionStorage.getItem( "wb-session-GUID" );
 			if ( !sessionId ) {
 				sessionId = wb.guid();
 				sessionStorage.setItem( "wb-session-GUID", sessionId );
@@ -267,8 +267,8 @@ var getUrlParts = function( url ) {
 		},
 
 		// Add a selector to be targeted by timerpoke
-		add: function( selector ) {
-			var exists = false,
+		"add"( selector ) {
+			let exists = false,
 				len = wb.selectors.length,
 				i;
 
@@ -292,8 +292,8 @@ var getUrlParts = function( url ) {
 		},
 
 		// Remove a selector targeted by timerpoke
-		remove: function( selector ) {
-			var len = this.selectors.length,
+		"remove"( selector ) {
+			let len = this.selectors.length,
 				i;
 
 			for ( i = 0; i !== len; i += 1 ) {
@@ -305,8 +305,8 @@ var getUrlParts = function( url ) {
 		},
 
 		// Handles triggering of timerpoke events
-		timerpoke: function( initial ) {
-			var selectorsLocal = wb.selectors.slice( 0 ),
+		"timerpoke"( initial ) {
+			let selectorsLocal = wb.selectors.slice( 0 ),
 				len = selectorsLocal.length,
 				selector, $elms, $foundElms, i;
 
@@ -332,7 +332,7 @@ var getUrlParts = function( url ) {
 			$elms.trigger( "timerpoke.wb" );
 		},
 
-		start: function() {
+		"start"() {
 
 			// Save a copy of all the possible selectors
 			wb.allSelectors = wb.selectors.join( ", " );
@@ -346,9 +346,9 @@ var getUrlParts = function( url ) {
 			setInterval( wb.timerpoke, 500 );
 		},
 
-		i18nDict: {},
-		i18n: function( key, state, mixin ) {
-			var dictionary = wb.i18nDict,
+		"i18nDict": {},
+		"i18n"( key, state, mixin ) {
+			const dictionary = wb.i18nDict,
 
 				// eg. 000 or 001 ie. 0 or 1
 				truthiness = ( typeof key === "string" && key !== "" ) |
@@ -379,12 +379,12 @@ var getUrlParts = function( url ) {
 			}
 		},
 
-		hashString: function( str ) {
+		"hashString"( str ) {
 
 			// Sources:
-			//	http://werxltd.com/wp/2010/05/13/javascript-implementation-of-javas-string-hashcode-method/
-			//	http://jsperf.com/hashing-strings
-			var hash = 0,
+			// 	http://werxltd.com/wp/2010/05/13/javascript-implementation-of-javas-string-hashcode-method/
+			// 	http://jsperf.com/hashing-strings
+			let hash = 0,
 				chr, i;
 
 			if ( str.length === 0 ) {
@@ -402,12 +402,12 @@ var getUrlParts = function( url ) {
 			return hash;
 		},
 
-		stripWhitespace: function( str ) {
+		"stripWhitespace"( str ) {
 			return str.replace( /\s+/g, "" );
 		},
 
 		// Core function to deal with the dependency racing issue
-		whenLibReady: function( testCallback, readyCallback ) {
+		"whenLibReady"( testCallback, readyCallback ) {
 			if ( testCallback() ) {
 				readyCallback();
 			} else {
@@ -416,7 +416,7 @@ var getUrlParts = function( url ) {
 				}, 50 );
 			}
 
-		}
+		},
 	};
 
 window.wb = wb;
@@ -446,7 +446,7 @@ yepnope.addPrefix( "site", function( resourceObj ) {
  * @prefix: plyfll! - builds the path for the polyfill resource
  */
 yepnope.addPrefix( "plyfll", function( resourceObj ) {
-	var path,
+	let path,
 		url = resourceObj.url;
 
 	if ( disabled && url.indexOf( "svg" ) === -1 ) {
@@ -487,7 +487,7 @@ yepnope.addPrefix( "mthjx", function( resourceObj ) {
  *-----------------------------*/
 wb.modernizrLoad = Modernizr.load;
 Modernizr.load = function( options ) {
-	var i, i_len, i_cache,
+	let i, i_len, i_cache,
 		testReady, complete;
 	if ( !$.isArray( options ) ) {
 		options = [ options ];
@@ -512,44 +512,44 @@ Modernizr.load( [
 		test: Modernizr.details,
 		nope: [
 			"plyfll!details.min.js",
-			"plyfll!details.min.css"
-		]
+			"plyfll!details.min.css",
+		],
 	}, {
 		test: Modernizr.input.list,
 		nope: [
 			"plyfll!datalist.min.js",
-			"plyfll!datalist.min.css"
-		]
+			"plyfll!datalist.min.css",
+		],
 	}, {
 		test: Modernizr.inputtypes.date,
 		nope: [
 			"plyfll!datepicker.min.js",
-			"plyfll!datepicker.min.css"
-		]
+			"plyfll!datepicker.min.css",
+		],
 	}, {
 		test: Modernizr.inputtypes.range,
 		nope: [
 			"plyfll!slider.min.js",
 			"plyfll!slider_wrapper.min.js",
-			"plyfll!slider.min.css"
+			"plyfll!slider.min.css",
 		],
-		callback: function( url ) {
+		callback( url ) {
 			if ( url === "slider.min.js" ) {
 				window.fdSlider.onDomReady();
 			}
-		}
+		},
 	}, {
 		test: Modernizr.progressbar,
 		nope: [
 			"plyfll!progress.min.js",
-			"plyfll!progress.min.css"
-		]
+			"plyfll!progress.min.css",
+		],
 	}, {
 		test: Modernizr.mathml,
 
 		// Cleanup Modernizr test and add selector to global timer
-		complete: function() {
-			var	componentName = "wb-math",
+		complete() {
+			const	componentName = "wb-math",
 				selector = "math",
 				math = document.getElementsByTagName( selector ),
 				$document = wb.doc;
@@ -572,42 +572,42 @@ Modernizr.load( [
 					// when !Modernizr.mathml, we can skip the test here.
 					Modernizr.load( [ {
 						load: "timeout=500!https://cdn.jsdelivr.net/npm/mathjax@WET_BOEW_VERSION_MATHJAX/MathJax.js?config=Accessible",
-						complete: function() {
+						complete() {
 							Modernizr.load( [ {
 								test: window.MathJax === undefined,
-								yep: "mthjx!MathJax.js?config=Accessible"
+								yep: "mthjx!MathJax.js?config=Accessible",
 							} ] );
 
 							// Identify that initialization has completed
 							wb.ready( $document, componentName );
-						}
+						},
 					} ] );
 				} );
 
 				wb.add( selector );
 			}
-		}
+		},
 	}, {
 		test: Modernizr.meter,
 		nope: [
 			"plyfll!meter.min.js",
-			"plyfll!meter.min.css"
-		]
+			"plyfll!meter.min.css",
+		],
 	}, {
 		test: Modernizr.touch,
-		yep: "plyfll!mobile.min.js"
+		yep: "plyfll!mobile.min.js",
 	}, {
 		test: Modernizr.svg,
-		nope: "plyfll!svg.min.js"
+		nope: "plyfll!svg.min.js",
 	}, {
 		load: "i18n!i18n/",
-		testReady: function() {
+		testReady() {
 			return wb.i18nDict.tphp;
 		},
-		complete: function() {
+		complete() {
 			wb.start();
-		}
-	}
+		},
+	},
 ] );
 
 } )( jQuery, window, document );
